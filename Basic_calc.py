@@ -10,4 +10,3 @@ add = a + b
 os.system("cls")
 print("BASIC CALC")
 print("The add is:", add)
-
