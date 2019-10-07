@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 class manager(models.Model):
     id = models.AutoField(primary_key=True)
@@ -38,9 +39,22 @@ class Author(manager,social):
         verbose_name = 'Author'
         verbose_name_plural = 'Authors'
     def __str__(self):
-        return '{0},{1}'.format(self.lastname, " ", self.firstname)
+        return '{0}{1}{2}'.format(self.lastname, ", ", self.firstname)
 
-
+class Post(manager):
+    title = models.CharField('Title', max_length = 200)
+    description = models.TextField('Description')
+    author = models.ForeignKey(Author,on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    content = RichTextField()
+    image = models.ImageField('Image', upload_to = 'images/', max_length=200)
+    published = models.BooleanField('Published / No published', default = False)
+    published_date = models.DateField('Published date')
+    class Meta:
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'
+    def __str__(self):
+        return self.title
 
 
 
